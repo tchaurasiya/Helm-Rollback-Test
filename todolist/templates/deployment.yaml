@@ -52,3 +52,58 @@ affinity:
 tolerations:
   {{ toYaml . | indent 8 }}
     {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tathagat-helm-deployment-test
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "todolist.name" . }}
+    chart: {{ template "todolist.chart" . }}
+    release: {{ .Release.Name }}
+    harness.io/release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "todolist.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "todolist.name" . }}
+        release: {{ .Release.Name }}
+        harness.io/release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+  {{ toYaml .Values.resources | indent 12 }}
+  {{- with .Values.nodeSelector }}
+nodeSelector:
+  {{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+affinity:
+  {{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+tolerations:
+  {{ toYaml . | indent 8 }}
+    {{- end }}
