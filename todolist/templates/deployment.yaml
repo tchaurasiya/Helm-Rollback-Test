@@ -56,7 +56,7 @@ tolerations:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tathagat-helm-deployment-test-prod
+  name: tathagat-helm-deployment-test-prod-a
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ template "todolist.name" . }}
