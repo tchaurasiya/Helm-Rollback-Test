@@ -18,3 +18,24 @@ spec:
   selector:
     app: {{ template "todolist.name" . }}
     release: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helm-rollback-test-tathagat
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "todolist.name" . }}
+    chart: {{ template "todolist.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "todolist.name" . }}
+    release: {{ .Release.Name }}
