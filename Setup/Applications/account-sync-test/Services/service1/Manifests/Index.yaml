@@ -1,3 +1,7 @@
 harnessApiVersion: '1.0'
 type: APPLICATION_MANIFEST
-storeType: Local
+helmChartConfig:
+  chartName: chartmuseum
+  chartVersion: 2.10.0
+  connectorName: correct helm repo
+storeType: HelmChartRepo
