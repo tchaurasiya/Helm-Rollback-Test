@@ -4,4 +4,5 @@ helmChartConfig:
   chartName: chartmuseum
   chartVersion: 2.10.0
   connectorName: correct helm repo
+skipVersioningForAllK8sObjects: true
 storeType: HelmChartRepo
