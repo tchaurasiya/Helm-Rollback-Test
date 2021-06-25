@@ -1,8 +1,0 @@
-harnessApiVersion: '1.0'
-type: APPLICATION_MANIFEST
-helmChartConfig:
-  chartName: chartmuseum
-  chartVersion: 2.13.0
-  connectorName: correct helm repo
-skipVersioningForAllK8sObjects: true
-storeType: HelmChartRepo
