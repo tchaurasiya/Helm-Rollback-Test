@@ -2,7 +2,7 @@ harnessApiVersion: '1.0'
 type: APPLICATION_MANIFEST
 helmChartConfig:
   chartName: chartmuseum
-  chartVersion: 2.10.0
+  chartVersion: 2.11.0
   connectorName: correct helm repo
 skipVersioningForAllK8sObjects: true
 storeType: HelmChartRepo
