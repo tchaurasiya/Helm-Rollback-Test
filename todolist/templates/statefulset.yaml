@@ -1,31 +1,46 @@
-
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: nginx
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: counter
+  name: web
 spec:
-  serviceName: "counter-app"
+  serviceName: "nginx"
+  replicas: 2
   selector:
     matchLabels:
-      app: counter
-  replicas: 1 
+      app: nginx
   template:
     metadata:
       labels:
-        app: counter
-    spec:      
+        app: nginx
+    spec:
       containers:
-      - name: counter
-        image: "kahootali/counter:1.1"  
+      - name: nginx
+        image: k8s.gcr.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+          name: web
         volumeMounts:
-        - name: counter
-          mountPath: /app/      
+        - name: www
+          mountPath: /usr/share/nginx/html
   volumeClaimTemplates:
   - metadata:
-      name: counter
+      name: www
     spec:
-      accessModes: [ "ReadWriteMany" ]
-      storageClassName: efs
+      accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 50Mi
+          storage: 1Gi
