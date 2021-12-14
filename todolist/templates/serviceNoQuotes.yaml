@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tathagat-bug-test-deployment
+  annotations: 
+    harness.io/skip-versioning: true
+    harness.io/direct-apply: true
+spec:
+  type: {{.Values.serviceType}}
+  ports:
+  - port: {{.Values.servicePort}}
+    targetPort: {{.Values.serviceTargetPort}}
+    protocol: TCP
+  selector:
+    app: {{.Values.name}}
